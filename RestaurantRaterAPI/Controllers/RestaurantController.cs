@@ -65,7 +65,6 @@ namespace RestaurantRaterAPI.Controllers
                 {
                     // Update the restaurant now that we found it
                     restaurant.Name = updatedRestaurant.Name;
-                    restaurant.Rating = updatedRestaurant.Rating;
 
                     await _context.SaveChangesAsync();
 
@@ -88,12 +87,16 @@ namespace RestaurantRaterAPI.Controllers
             Restaurant entity = await _context.Restaurants.FindAsync(id);
 
             if (entity == null)
+            {
                 return NotFound();
+            }
 
             _context.Restaurants.Remove(entity);
 
             if (await _context.SaveChangesAsync() == 1)
+            {
                 return Ok("The restaurant was deleted");
+            }
 
             return InternalServerError();
         }
